@@ -8,9 +8,10 @@ import { User } from '@supabase/supabase-js';
 interface WorkspaceNavbarProps {
     user: User | null;
     signOut: () => Promise<void>;
+    onSearch?: (query: string) => void;
 }
 
-export function WorkspaceNavbar({ user, signOut }: WorkspaceNavbarProps) {
+export function WorkspaceNavbar({ user, signOut, onSearch }: WorkspaceNavbarProps) {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const profileRef = useRef<HTMLDivElement>(null);
 
@@ -76,6 +77,7 @@ export function WorkspaceNavbar({ user, signOut }: WorkspaceNavbarProps) {
                     <input
                         type="text"
                         placeholder="Search your library..."
+                        onChange={(e) => onSearch?.(e.target.value)}
                         className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none py-2.5 pr-4"
                     />
                 </div>
