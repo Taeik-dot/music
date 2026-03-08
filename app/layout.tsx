@@ -1,25 +1,24 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Pirata_One, Schoolbell } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
+// ... (생략된 폰트 설정들)
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-// 메인 대형 텍스트용 폰트
 const pirataOne = Pirata_One({
   variable: "--font-pirata-one",
   weight: "400",
   subsets: ["latin"],
 });
 
-// 로고용 폰트
 const schoolbell = Schoolbell({
   variable: "--font-schoolbell",
   weight: "400",
@@ -41,7 +40,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pirataOne.variable} ${schoolbell.variable} antialiased`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
