@@ -71,7 +71,7 @@ export const MinimalistHero = ({
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="rounded-full bg-foreground px-5 py-2 text-sm font-semibold tracking-wide text-background transition-opacity hover:opacity-80"
+                        className="rounded-full bg-foreground px-4 py-1.5 text-xs font-semibold tracking-wide text-background transition-opacity hover:opacity-80"
                     >
                         Get Started
                     </motion.a>
@@ -105,7 +105,7 @@ export const MinimalistHero = ({
                     </p>
                     <a
                         href={readMoreLink}
-                        className="mt-5 inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-opacity hover:opacity-80"
+                        className="mt-5 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2 text-sm font-semibold text-background transition-opacity hover:opacity-80"
                     >
                         Get Started
                     </a>

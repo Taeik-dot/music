@@ -1,8 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 // Google 로고 SVG 컴포넌트
 const GoogleIcon = () => (
@@ -53,18 +55,42 @@ const FloatingOrb = ({
 
 export default function AuthPage() {
     const supabase = createClient();
+    const router = useRouter();
+    const { user, loading } = useAuth();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    useEffect(() => {
+        // 이미 로그인 되어 있으면 워크스페이스로 이동
+        if (isMounted && !loading && user) {
+            router.push('/workspace');
+        }
+    }, [user, loading, router, isMounted]);
 
     const handleGoogleLogin = async () => {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${window.location.origin}/auth/callback`,
+                redirectTo: `${window.location.origin}/auth/callback?next=/workspace`,
             },
         });
         if (error) {
             console.error('Error logging in with Google:', error.message);
         }
     };
+
+    // 로딩 중이거나 이미 로그인된 상태에서 깜빡임 방지
+    if (!isMounted || (loading || user)) {
+        return (
+            <div
+                className="relative flex min-h-screen w-full items-center justify-center overflow-hidden"
+                style={{ backgroundColor: '#171717' }}
+            />
+        );
+    }
 
     return (
         <div
